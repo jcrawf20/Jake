@@ -1,14 +1,19 @@
 //Jake Crawford
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class WordCounter 
 {
 	public static void main(String[] args) throws IOException
 	{
 		//Sets up relevant variables
-		String word, line, filename = args[0];
+		String line, filename = args[0];
 		BufferedReader in = null;
 		try//Exits the program if the given filename can't be found
 		{
@@ -29,16 +34,15 @@ public class WordCounter
 		
 		while(line != null)//Iterates through the reader until the end of file and adds every word to the hashset
 		{
-			line = line.replaceAll(",|;|:|\\.|\\?|!|\\(|\\)|\\[.*?\\]", "");//Removes punctuation
+			line = line.replaceAll("\"|,|;|:|\\.|\\?|!|\\(|\\)|\\[.*?\\]", "");//Removes punctuation
 			line = line.toLowerCase();//Prevents counting capitalized words more than once
 			uniqueWords.addAll(Arrays.asList(line.split(" ")));//Splits the line into tokens and adds them to the hashset
 			line = in.readLine();
 		}
 		in.close();
 		
-		for(String aword : uniqueWords)//Iterates through the uniqueWords and adds them to the appropriate sets
+		for(String word : uniqueWords)//Iterates through the uniqueWords and adds them to the appropriate sets
 		{
-			word = aword.toLowerCase();
 			if((word.length() % 2) == 0)
 				even.add(word);
 			else
